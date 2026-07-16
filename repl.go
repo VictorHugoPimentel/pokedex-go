@@ -7,10 +7,10 @@ import (
 	"strings"
 )
 
-func startRepl() {
+func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
-		fmt.Print("Please Enter some Text: ")
+		fmt.Print("What do you want to do? Type 'help' for a list of commands: ")
 		scanner.Scan()
 		text := scanner.Text()
 		cleaned := cleanInput(text)
@@ -25,14 +25,17 @@ func startRepl() {
 			fmt.Println("Invalid command. Please try again.")
 			continue
 		}
-		command.callback()
+		err := command.callback(cfg)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }
 
 type cliCommand struct {
 	name string
 	description string
-	callback func() error
+	callback func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -46,6 +49,16 @@ func getCommands() map[string]cliCommand {
 			name: "exit",
 			description: "Exit the REPL",
 			callback: callbackExit,
+		},
+		"map": {
+			name: "map",
+			description: "List all location areas",
+			callback: callbackMap,
+		},
+		"mapb": {
+			name: "mapb",
+			description: "List previous location areas",
+			callback: callbackMapb,
 		},
 	}
 }
