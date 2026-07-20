@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func callbackHelp(cfg *config) error{
+func callbackHelp(cfg *config, args ...string) error{
 	fmt.Println("Welcome to TOG's POKEDEX!!")
 	fmt.Println("Here are the available commands:")
 	availableCommands := getCommands()

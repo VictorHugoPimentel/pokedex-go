@@ -54,3 +54,48 @@ func (c *Client) ListLocationAreas(pageURL *string) (LocationAreasResp, error){
 	c.cache.Add(fullURL, dat)
 	return locationAreasResp, nil
 }
+
+func (c *Client) GEtLocationArea(LocationAreaName string) (LocationArea, error){
+	endpoint := "/location-area/" + LocationAreaName
+	fullURL := baseURL + endpoint
+
+	dat, ok := c.cache.Get(fullURL)
+	if ok{
+		fmt.Println("Cache hit for URL: ", fullURL)
+		locationArea := LocationArea{}
+		err := json.Unmarshal(dat, &locationArea)
+		if err != nil {
+			return LocationArea{}, err
+		}
+	return locationArea, nil
+	}
+	fmt.Println("Cache miss for URL: ", fullURL)
+
+	req, err := http.NewRequest("GET", fullURL, nil)
+	if err != nil {
+		return LocationArea{}, err
+	}
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return LocationArea{}, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode > 399 {
+		return LocationArea{}, fmt.Errorf("Bad status Code: %v", resp.StatusCode)
+	}
+
+	dat, err = io.ReadAll(resp.Body)
+	if err != nil {
+		return LocationArea{}, err
+	}
+
+	locationArea := LocationArea{}
+	err = json.Unmarshal(dat, &locationArea)
+	if err != nil {
+		return LocationArea{}, err
+	}
+	c.cache.Add(fullURL, dat)
+	return locationArea, nil
+}
