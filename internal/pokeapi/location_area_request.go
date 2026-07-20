@@ -55,7 +55,7 @@ func (c *Client) ListLocationAreas(pageURL *string) (LocationAreasResp, error){
 	return locationAreasResp, nil
 }
 
-func (c *Client) GEtLocationArea(LocationAreaName string) (LocationArea, error){
+func (c *Client) GetLocationArea(LocationAreaName string) (LocationArea, error){
 	endpoint := "/location-area/" + LocationAreaName
 	fullURL := baseURL + endpoint
 

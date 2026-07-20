@@ -10,7 +10,7 @@ func callbackExplore(cfg *config, args ...string) error {
 		return errors.New("No location area provided.")
 	}
 	locationAreaName := args[0]
-	locationArea, err := cfg.pokeapiClient.GEtLocationArea(locationAreaName)
+	locationArea, err := cfg.pokeapiClient.GetLocationArea(locationAreaName)
 	if err != nil {
 		return err
 	}
