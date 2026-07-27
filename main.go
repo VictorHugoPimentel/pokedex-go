@@ -11,6 +11,7 @@ type config struct {
 	pokemonService *service.PokemonService
 	nextLocationAreaURL *string
 	prevLocationAreaURL *string
+	locationService *service.LocationService
 	caughtPokemons map[string]pokeapi.Pokemon
 }
 
@@ -19,6 +20,7 @@ func main() {
 
 	cfg := config{
 		pokemonService: service.NewPokemonService(client),
+		locationService: service.NewLocationService(client),
 	}
 	startRepl(&cfg)
 }

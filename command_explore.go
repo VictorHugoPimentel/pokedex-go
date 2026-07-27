@@ -1,16 +1,14 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
 func callbackExplore(cfg *config, args ...string) error {
-	if len(args) != 1{
-		return errors.New("No location area provided.")
+	if len(args) != 1 {
+		return fmt.Errorf("Please provide a valid location area name.")
 	}
-	locationAreaName := args[0]
-	locationArea, err := cfg.pokeapiClient.GetLocationArea(locationAreaName)
+	locationArea, err := cfg.locationService.ExploreLocationArea(args[0])
 	if err != nil {
 		return err
 	}
