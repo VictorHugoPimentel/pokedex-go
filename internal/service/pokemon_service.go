@@ -33,3 +33,11 @@ func(s *PokemonService) CatchPokemon(name string) error {
 	fmt.Printf("Caught %s!\n", pokemon.Name)
 	return nil
 }
+
+func (s *PokemonService) InspectPokemon(name string) (pokeapi.Pokemon, error) {
+	pokemon, ok := s.caught[name]
+	if !ok {
+		return pokeapi.Pokemon{}, fmt.Errorf("You haven't caught %s yet.", name)
+	}
+	return pokemon, nil
+}

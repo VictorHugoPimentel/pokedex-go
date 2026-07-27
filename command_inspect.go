@@ -1,19 +1,13 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
 func callbackInspect(cfg *config, args ...string) error {
-	if len(args) != 1{
-		return errors.New("No Pokemon name provided.")
-	}
-
-	pokemonName := args[0]
-	pokemon, ok := cfg.caughtPokemons[pokemonName]
-	if !ok{
-		return fmt.Errorf("You haven't caught %s yet.", pokemonName)
+	pokemon, err := cfg.pokemonService.InspectPokemon(args[0])
+	if err != nil {
+		return err
 	}
 	fmt.Printf("Name: %s\n", pokemon.Name)
 	fmt.Printf("Height: %v\n", pokemon.Height)
