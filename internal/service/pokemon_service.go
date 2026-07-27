@@ -4,6 +4,7 @@ import (
 	"Pokedex/internal/pokeapi"
 	"fmt"
 	"math/rand"
+	"sort"
 )
 
 type PokemonService struct {
@@ -40,4 +41,15 @@ func (s *PokemonService) InspectPokemon(name string) (pokeapi.Pokemon, error) {
 		return pokeapi.Pokemon{}, fmt.Errorf("You haven't caught %s yet.", name)
 	}
 	return pokemon, nil
+}
+
+func (s*PokemonService) ListCaughtPokemons() []pokeapi.Pokemon {
+	pokemons := make([]pokeapi.Pokemon, 0, len(s.caught))
+	for _, pokemon := range s.caught {
+		pokemons = append(pokemons, pokemon)
+	}
+	sort.Slice(pokemons, func(i, j int) bool {
+		return pokemons[i].ID < pokemons[j].ID
+	})
+	return pokemons
 }
