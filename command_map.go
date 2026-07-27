@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
-	"errors"
 )
 
 func callbackMap(cfg *config, args ...string) error {
-	resp, err := cfg.pokeapiClient.ListLocationAreas(cfg.nextLocationAreaURL)
+	resp, err := cfg.locationService.NextLocations()
 	if err != nil {
 		return err
 	}
@@ -14,16 +13,11 @@ func callbackMap(cfg *config, args ...string) error {
 	for _, area := range resp.Results {
 		fmt.Println("-", area.Name)
 	}
-	cfg.nextLocationAreaURL = resp.Next
-	cfg.prevLocationAreaURL = resp.Previous
 	return nil
 }
 
 func callbackMapb(cfg *config, args ...string) error {
-	if cfg.prevLocationAreaURL == nil {
-		return errors.New("You are on the first page!")
-	}
-	resp, err := cfg.pokeapiClient.ListLocationAreas(cfg.prevLocationAreaURL)
+	resp, err := cfg.locationService.PreviousLocations()
 	if err != nil {
 		return err
 	}
@@ -31,7 +25,5 @@ func callbackMapb(cfg *config, args ...string) error {
 	for _, area := range resp.Results {
 		fmt.Println("-", area.Name)
 	}
-	cfg.nextLocationAreaURL = resp.Next
-	cfg.prevLocationAreaURL = resp.Previous
 	return nil
 }

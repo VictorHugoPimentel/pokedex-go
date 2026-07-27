@@ -7,12 +7,8 @@ import (
 )
 
 type config struct {
-	pokeapiClient pokeapi.Client
 	pokemonService *service.PokemonService
-	nextLocationAreaURL *string
-	prevLocationAreaURL *string
 	locationService *service.LocationService
-	caughtPokemons map[string]pokeapi.Pokemon
 }
 
 func main() {
