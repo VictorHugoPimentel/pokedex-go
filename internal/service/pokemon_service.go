@@ -53,3 +53,7 @@ func (s*PokemonService) ListCaughtPokemons() []pokeapi.Pokemon {
 	})
 	return pokemons
 }
+
+func (s *PokemonService) GetPokemon(name string) (pokeapi.Pokemon, error) {
+	return s.client.GetPokemon(name)
+}
