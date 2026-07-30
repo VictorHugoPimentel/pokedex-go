@@ -1,4 +1,4 @@
-# Binary
+# Binaries
 Pokedex
 *.exe
 *.exe~
@@ -10,9 +10,12 @@ Pokedex
 go.work
 go.work.sum
 
-# IDE
+# IDEs
 .vscode/
 .idea/
 
 # OS
 .DS_Store
+
+# Personal notes
+anotacoes.txt
