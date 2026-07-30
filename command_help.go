@@ -20,7 +20,10 @@ func callbackHelp(cfg *config, args ...string) error {
 	availableCommands := getCommands()
 
 	for _, commandName := range commandOrder {
-		command := availableCommands[commandName]
+		command, ok := availableCommands[commandName]
+		if ! ok {
+			continue
+		}
 		fmt.Printf("%s - %s\n", command.name, command.description)
 	}
 
